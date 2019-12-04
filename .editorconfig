@@ -10,3 +10,6 @@ insert_final_newline = true
 
 [*.go]
 indent_style = tab # as done by gofmt
+
+[Makefile]
+indent_style = tab # standard for Makefiles
