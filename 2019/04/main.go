@@ -7,6 +7,42 @@ import (
 	"strconv"
 )
 
+func valid(number int) bool {
+	valid := true
+
+	var doubleCount [10]int
+
+	prev := -1
+	for n := number; n > 0; n = n / 10 {
+		d := n % 10
+		if prev >= 0 {
+			if prev == d {
+				doubleCount[d]++
+			} else {
+				if prev < d {
+					valid = false
+					break
+				}
+			}
+		}
+		prev = d
+	}
+
+	double := false
+	for _, n := range doubleCount {
+		if n == 1 {
+			double = true
+			break
+		}
+	}
+
+	if valid && double {
+		return true
+	}
+
+	return false
+}
+
 func main() {
 	minS := os.Args[1]
 	maxS := os.Args[2]
@@ -21,23 +57,7 @@ func main() {
 
 	count := 0
 	for i := rangeMin; i <= rangeMax; i++ {
-		double := false
-		valid := true
-
-		prev := -1
-		for n := i; n > 0; n = n / 10 {
-			d := n % 10
-			if prev >= 0 {
-				if prev == d {
-					double = true
-				} else if prev < d {
-					valid = false
-					break
-				}
-			}
-			prev = d
-		}
-		if valid && double {
+		if valid(i) {
 			fmt.Fprintf(os.Stderr, "%d\n", i)
 			count++
 		}
